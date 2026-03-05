@@ -33,7 +33,7 @@ You can see it running here: [wttr.in](https://wttr.in).
     Data Directory: /home/username/.docker/data/wttr
     Logs Directory: /home/username/.docker/logs/wttr
     ```
-3. If you would like IP2Location which is optional, go to the [IP2Location website](https://www.ip2location.io) and sign up for an account. They have a free plan which includes 50,000 API calls per month. Once signed up, grab your API key and save into a new file at `/home/username/.docker/data/wttr/.ip2location.key`.
+3. If you would like IP2Location which is optional, go to the [IP2Location website](https://www.ip2location.io) and sign up for an account. They have a free plan which includes 50,000 API calls per month. Once signed up, grab your API key and save it into a new file at `/home/username/.docker/data/wttr/.ip2location.key`.
 4. Grab a copy of `airports.dat` [from here](https://github.com/jpatokal/openflights/blob/master/data/airports.dat). I am not 100% if this is the correct file or data but was one of my search results when looking up the term, "airports.dat". Place the file at `/home/username/.docker/data/wttr/airports.dat`.
 5. Sign up for a [MaxMind account](https://www.maxmind.com/en/create-account). You will need this to obtain the GeoLite2 database.
     * Once signed up, and logged in, you should be on your Account Summary page. You should see a sidebar on the left side of the page which a bunch of links. Atop the sidebar you should see Account (ID: xxxxxxx), where xxxxxxx is your account ID. Take note of that as we'll need it in a moment.
