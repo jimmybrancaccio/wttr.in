@@ -17,6 +17,7 @@ func (g *global) printDay(w weather) ([]string, error) {
 		ret      = []string{}
 		dateName string
 		names    string
+		date_format	string
 	)
 
 	hourly := w.Hourly
