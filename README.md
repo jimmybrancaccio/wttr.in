@@ -119,7 +119,7 @@ You can see it running here: [wttr.in](https://wttr.in).
 
 ### Configure the HTTP-frontend service
 
-It's recommended that you also configure the web server that will be used to access the service. The following is an example using Nginx, though I use Traefik myself.
+It's recommended that you also configure the web server that will be used to access the service. The following is an example using Nginx, though I use Traefik myself. I can share or update this README with my Traefik information if there's interest.
 
 ```nginx
 server {
