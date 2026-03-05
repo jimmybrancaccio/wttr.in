@@ -9,6 +9,12 @@ External environment variables:
     WTTR_LISTEN_HOST
     WTTR_LISTEN_PORT
     WTTR_USER_AGENT
+    DEFAULT_LOCATION        # Default city when location lookup fails (env: DEFAULT_LOCATION)
+    MY_EXTERNAL_IP          # External IP used for geolocation defaults (env: MY_EXTERNAL_IP)
+    DATADIR                 # Base data directory (env: DATADIR)
+    LOGDIR                  # Log directory (env: LOGDIR)
+    AIRPORTS_DAT_FILE       # Path to airports.dat (env: WTTR_AIRPORTS_DAT_FILE)
+    USE_IMPERIAL            # Default units when query has no unit flags (env: USE_IMPERIAL)
 
 """
 from __future__ import print_function
@@ -24,11 +30,11 @@ if "WTTR_GEOLITE" in os.environ:
 else:
     GEOLITE = os.path.join(MYDIR, "data", "GeoLite2-City.mmdb")
 
-WEGO = os.environ.get("WTTR_WEGO", "/home/igor/go/bin/we-lang")
-PYPHOON = "/home/igor/src/pyphoon/ve/bin/pyphoon-lolcat" # "pyphoon-lolcat"
+WEGO = os.environ.get("WTTR_WEGO", "/app/go/bin/wego")
+PYPHOON = "/opt/venv/bin/pyphoon-lolcat" # "pyphoon-lolcat"
 
-_DATADIR = "/wttr.in"
-_LOGDIR = "/wttr.in/log"
+_DATADIR = os.environ.get("DATADIR", "/app/data")
+_LOGDIR = os.environ.get("LOGDIR", "/app/logs")
 
 IP2LCACHE = os.path.join(_DATADIR, "cache/ip2l/")
 PNG_CACHE = os.path.join(_DATADIR, "cache/png")
@@ -55,7 +61,9 @@ TEMPLATES = os.path.join(MYDIR, "share/templates")
 STATIC = os.path.join(MYDIR, "share/static")
 
 NOT_FOUND_LOCATION = "not found"
-DEFAULT_LOCATION = "oymyakon"
+# Default location can be overridden with the environment variable `DEFAULT_LOCATION`.
+# Fallback is "Houston" when the env var is not set.
+DEFAULT_LOCATION = os.environ.get("DEFAULT_LOCATION", "Houston")
 
 MALFORMED_RESPONSE_HTML_PAGE = open(
     os.path.join(STATIC, "malformed-response.html")
@@ -77,7 +85,10 @@ PROXY_HOST = "127.0.0.1"
 PROXY_PORT = 5001
 PROXY_CACHEDIR = os.path.join(_DATADIR, "cache/proxy-wwo/")
 
-MY_EXTERNAL_IP = "5.9.243.187"
+# External IP of the host used as a fallback for geolocation-based defaults.
+# Can be set via environment variable `MY_EXTERNAL_IP`.
+# No hardcoded fallback is provided — if not set, the value will be None.
+MY_EXTERNAL_IP = os.environ.get("MY_EXTERNAL_IP")
 
 PLAIN_TEXT_AGENTS = [
     "curl",
