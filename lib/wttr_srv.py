@@ -50,7 +50,8 @@ logging.basicConfig(
     filename=LOG_FILE, level=logging.INFO, format="%(asctime)s %(message)s"
 )
 
-LIMITS = Limits(whitelist=[MY_EXTERNAL_IP], limits=QUERY_LIMITS)
+_whitelist = [MY_EXTERNAL_IP] if MY_EXTERNAL_IP else []
+LIMITS = Limits(whitelist=_whitelist, limits=QUERY_LIMITS)
 
 TASKS = ThreadPool(25)
 
