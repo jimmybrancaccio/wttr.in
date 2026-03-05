@@ -1,6 +1,9 @@
 import csv
+import os
 
-AIRPORTS_DAT_FILE = "/home/igor/wttrin-geo/share/airports.dat"
+# Path to the airports data file; can be overridden with environment variable
+# `AIRPORTS_DAT_FILE`. Defaults to `/app/airports.dat`.
+AIRPORTS_DAT_FILE = os.environ.get("AIRPORTS_DAT_FILE", "/app/airports.dat")
 
 
 def load_aiports_index():
