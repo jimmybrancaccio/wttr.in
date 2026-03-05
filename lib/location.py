@@ -109,12 +109,12 @@ def _geolocator(location):
     """
 
     try:
-        if random.random() < 0:
-            geo = requests.get("%s/%s" % (GEOLOCATOR_SERVICE, location)).text
-        else:
-            geo = requests.get(
-                "http://127.0.0.1:8085/:geo-location?location=%s" % location
-            ).text
+        # Use configured geolocator service. Historically a hardcoded
+        # local service on port 8085 was used here, but the project
+        # ships `bin/geo-proxy.py` which listens on `GEOLOCATOR_SERVICE`
+        # (default: http://localhost:8004). Prefer the configured
+        # `GEOLOCATOR_SERVICE` so local deployments work out of the box.
+        geo = requests.get("%s/%s" % (GEOLOCATOR_SERVICE.rstrip("/"), location)).text
     except requests.exceptions.ConnectionError as exception:
         print("ERROR: %s" % exception)
         return None
@@ -166,7 +166,7 @@ def _ipcache(ip_addr):
     """
 
     ## Use Geo IP service when available
-    r = requests.get("http://127.0.0.1:8085/:geo-ip-get?ip=%s" % ip_addr)
+    r = requests.get("%s/:geo-ip-get?ip=%s" % (GEOLOCATOR_SERVICE.rstrip("/"), ip_addr))
     if r.status_code == 200 and ";" in r.text:
         _, country, region, city, *_ = r.text.split(";")
         return city, region, country
