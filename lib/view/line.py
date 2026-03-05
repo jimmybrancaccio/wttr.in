@@ -36,6 +36,8 @@ from constants import (
     WEATHER_SYMBOL_PLAIN,
 )
 from weather_data import get_weather_data
+# Use configured geolocator service
+from globals import GEOLOCATOR_SERVICE
 from . import v2
 #from . import v3
 from . import prometheus
@@ -271,7 +273,7 @@ def render_moonday(_, query):
 def get_geodata(location):
     # text = requests.get("http://localhost:8004/%s" % location).text
     text = requests.get(
-        "http://127.0.0.1:8085/:geo-location?location=%s" % location
+        "%s/:geo-location?location=%s" % (GEOLOCATOR_SERVICE.rstrip("/"), location)
     ).text
     return json.loads(text)
 

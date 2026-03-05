@@ -38,7 +38,7 @@ from astral import moon, sun
 from scipy.interpolate import interp1d
 from babel.dates import format_datetime
 
-from globals import WWO_KEY, TRANSLATION_TABLE, remove_ansi
+from globals import WWO_KEY, TRANSLATION_TABLE, remove_ansi, GEOLOCATOR_SERVICE
 import constants
 import translations
 import parse_query
@@ -639,7 +639,7 @@ def textual_information(data_parsed, geo_data, config, html_output=False):
 # get_geodata {{{
 def get_geodata(location):
     text = requests.get(
-        "http://127.0.0.1:8085/:geo-location?location=%s" % location
+        "%s/:geo-location?location=%s" % (GEOLOCATOR_SERVICE.rstrip("/"), location)
     ).text
     return json.loads(text)
 
