@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/usr/bin/env sh
 
 # The scipr is used to build a standalone we-lang binary from
 # the wttr.in Go source code. The script is needed as long as
