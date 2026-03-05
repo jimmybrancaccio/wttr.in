@@ -2,6 +2,7 @@ import re
 import json
 import zlib
 import base64
+import os
 
 
 def serialize(parsed_query):
@@ -44,17 +45,31 @@ def metric_or_imperial(query, lang, us_ip=False):
     elif query.get("use_imperial", False) and not query.get("use_metric", False):
         query["use_imperial"] = True
         query["use_metric"] = False
-    elif lang == "us":
-        # slack uses m by default, to override it speciy us.wttr.in
-        query["use_imperial"] = True
-        query["use_metric"] = False
     else:
-        if us_ip:
+        # No explicit unit flags in the query — respect environment override first
+        env_val = os.getenv("USE_IMPERIAL")
+        if env_val is not None:
+            v = env_val.strip().lower()
+            if v in ("1", "true", "yes", "on"):
+                query["use_imperial"] = True
+                query["use_metric"] = False
+                return query
+            if v in ("0", "false", "no", "off"):
+                query["use_imperial"] = False
+                query["use_metric"] = True
+                return query
+
+        # Fallback: prefer US units for requests originating from US
+        if lang == "us":
             query["use_imperial"] = True
             query["use_metric"] = False
         else:
-            query["use_imperial"] = False
-            query["use_metric"] = True
+            if us_ip:
+                query["use_imperial"] = True
+                query["use_metric"] = False
+            else:
+                query["use_imperial"] = False
+                query["use_metric"] = True
 
     return query
 
