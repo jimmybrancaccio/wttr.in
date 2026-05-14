@@ -91,6 +91,7 @@ PROXY_CACHEDIR = os.path.join(_DATADIR, "cache/proxy-wwo/")
 MY_EXTERNAL_IP = os.environ.get("MY_EXTERNAL_IP")
 
 PLAIN_TEXT_AGENTS = [
+    "",
     "curl",
     "httpie",
     "lwp-request",
